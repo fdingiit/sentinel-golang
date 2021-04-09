@@ -75,13 +75,14 @@ func (n *BaseStatNode) CurrentGoroutineNum() int32 {
 	return atomic.LoadInt32(&(n.goroutineNum))
 }
 
-func (n *BaseStatNode) IncreaseGoroutineNum() {
-	atomic.AddInt32(&(n.goroutineNum), 1)
-	n.arr.UpdateMaxConcurrency(int64(n.CurrentGoroutineNum()))
+func (n *BaseStatNode) IncreaseGoroutineNum() int32 {
+	new := atomic.AddInt32(&(n.goroutineNum), 1)
+	n.arr.UpdateMaxConcurrency(int64(new))
+	return new
 }
 
-func (n *BaseStatNode) DecreaseGoroutineNum() {
-	atomic.AddInt32(&(n.goroutineNum), -1)
+func (n *BaseStatNode) DecreaseGoroutineNum() int32 {
+	return atomic.AddInt32(&(n.goroutineNum), -1)
 }
 
 func (n *BaseStatNode) Reset() {

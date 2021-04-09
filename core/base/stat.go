@@ -43,8 +43,8 @@ type StatNode interface {
 	WriteStat
 
 	CurrentGoroutineNum() int32
-	IncreaseGoroutineNum()
-	DecreaseGoroutineNum()
+	IncreaseGoroutineNum() int32
+	DecreaseGoroutineNum() int32
 
 	Reset()
 }
